@@ -529,6 +529,7 @@ uint32_t PhysicalDevice::getFpsDivider()
 
 bool PhysicalDevice::setPowerMode(int mode)
 {
+#ifdef DRM_PSB_PM_SET
     // TODO: set proper power modes for HWC 1.4
     ATRACE("mode = %d", mode);
 
@@ -543,6 +544,21 @@ bool PhysicalDevice::setPowerMode(int mode)
     }
 
     return true;
+#else
+    // TODO: set proper blanking modes for HWC 1.4 modes
+    switch (mode) {
+        case HWC_POWER_MODE_OFF:
+            return blank(true);
+        case HWC_POWER_MODE_DOZE:
+        case HWC_POWER_MODE_NORMAL:
+        case HWC_POWER_MODE_DOZE_SUSPEND:
+            return blank(false);
+        default:
+            return false;
+    }
+
+    return false;
+#endif
 }
 
 int PhysicalDevice::getActiveConfig()
