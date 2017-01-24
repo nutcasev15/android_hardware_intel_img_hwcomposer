@@ -68,7 +68,7 @@ bool HwcLayerList::checkSupported(int planeType, HwcLayer *hwcLayer)
     }
 
     // check usage
-    if (!hwcLayer->getUsage() & GRALLOC_USAGE_HW_COMPOSER) {
+    if (!(hwcLayer->getUsage() & GRALLOC_USAGE_HW_COMPOSER)) {
         WLOGTRACE("not a composer layer");
         return false;
     }
@@ -134,7 +134,7 @@ bool HwcLayerList::checkRgbOverlaySupported(HwcLayer *hwcLayer)
     }
 
     // check usage
-    if (!hwcLayer->getUsage() & GRALLOC_USAGE_HW_COMPOSER) {
+    if (!(hwcLayer->getUsage() & GRALLOC_USAGE_HW_COMPOSER)) {
         WLOGTRACE("not a composer layer");
         return false;
     }
@@ -204,7 +204,7 @@ bool HwcLayerList::checkCursorSupported(HwcLayer *hwcLayer)
     }
 
     // check usage
-    if (!hwcLayer->getUsage() & GRALLOC_USAGE_HW_COMPOSER) {
+    if (!(hwcLayer->getUsage() & GRALLOC_USAGE_HW_COMPOSER)) {
         WLOGTRACE("not a composer layer");
         return false;
     }
