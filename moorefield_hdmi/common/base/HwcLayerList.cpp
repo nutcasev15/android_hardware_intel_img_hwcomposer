@@ -267,6 +267,10 @@ bool HwcLayerList::initialize()
             DEINIT_AND_RETURN_FALSE("layer %d is null", i);
         }
 
+        if ((layer->compositionType != HWC_FRAMEBUFFER_TARGET) &&
+                (layer->compositionType != HWC_SIDEBAND))
+            layer->compositionType = HWC_FRAMEBUFFER;
+
         HwcLayer *hwcLayer = new HwcLayer(i, layer);
         if (!hwcLayer) {
             DEINIT_AND_RETURN_FALSE("failed to allocate hwc layer %d", i);
@@ -784,6 +788,10 @@ void HwcLayerList::setupSmartComposition()
             break;
         }
     }
+}
+
+void HwcLayerList::updateFBT(hwc_display_contents_1_t *list) {
+    mFrameBufferTarget->update(&list->hwLayers[mLayerCount - 1]);
 }
 
 #if 1  // support overlay fallback to GLES
