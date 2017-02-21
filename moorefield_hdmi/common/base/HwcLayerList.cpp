@@ -267,10 +267,6 @@ bool HwcLayerList::initialize()
             DEINIT_AND_RETURN_FALSE("layer %d is null", i);
         }
 
-        if ((layer->compositionType != HWC_FRAMEBUFFER_TARGET) &&
-               (layer->compositionType != HWC_SIDEBAND))
-          layer->compositionType = HWC_FRAMEBUFFER;
-
         HwcLayer *hwcLayer = new HwcLayer(i, layer);
         if (!hwcLayer) {
             DEINIT_AND_RETURN_FALSE("failed to allocate hwc layer %d", i);
@@ -909,7 +905,7 @@ DisplayPlane* HwcLayerList::getPlane(uint32_t index) const
         return 0;
     }
 
-    if (hwcLayer->getLayer()->handle == 0) {
+    if (hwcLayer->getHandle() == 0) {
         DLOGTRACE("plane is attached with invalid handle");
         return 0;
     }
