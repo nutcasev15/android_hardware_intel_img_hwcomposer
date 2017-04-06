@@ -147,7 +147,7 @@ bool TngDisplayContext::commitEnd(size_t numDisplays, hwc_display_contents_1_t *
 
     VLOGTRACE("count = %d", mCount);
 
-    if (mIMGDisplayDevice && mCount) {
+    if (mIMGDisplayDevice) {
         int err = mIMGDisplayDevice->post(mIMGDisplayDevice,
                                           mImgLayers,
                                           mCount,
