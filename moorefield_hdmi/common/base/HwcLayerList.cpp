@@ -268,6 +268,7 @@ bool HwcLayerList::initialize()
         }
 
         if ((layer->compositionType != HWC_FRAMEBUFFER_TARGET) &&
+                (layer->compositionType != HWC_FORCE_FRAMEBUFFER) &&
                 (layer->compositionType != HWC_SIDEBAND))
             layer->compositionType = HWC_FRAMEBUFFER;
 
