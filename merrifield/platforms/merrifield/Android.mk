@@ -21,8 +21,9 @@ include $(CLEAR_VARS)
 LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE_RELATIVE_PATH := hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils libdrm \
-                          libwsbm libutils libhardware \
+                          libwsbm libutils libhardware libnativewindow \
                           libva libva-tpi libva-android libsync
+
 LOCAL_SRC_FILES := \
     ../../common/base/Drm.cpp \
     ../../common/base/HwcLayer.cpp \
