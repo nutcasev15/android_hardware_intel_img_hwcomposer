@@ -16,7 +16,7 @@
 
 #include <HwcTrace.h>
 #include <common/RotationBufferProvider.h>
-#include <system/window.h>
+#include <system/graphics-base.h>
 
 namespace android {
 namespace intel {
