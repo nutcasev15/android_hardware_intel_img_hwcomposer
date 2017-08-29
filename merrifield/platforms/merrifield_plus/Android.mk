@@ -138,5 +138,9 @@ ifneq ($(TARGET_BUILD_VARIANT),user)
    LOCAL_CFLAGS += -DHWC_TRACE_FPS
 endif
 
+ifeq ($(BOARD_USES_PRE_ION_X86),true)
+   LOCAL_CFLAGS += -DPRE_ION_X86
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
