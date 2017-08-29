@@ -1145,7 +1145,7 @@ bool OverlayPlaneBase::scalingSetup(BufferMapper& mapper)
 
 bool OverlayPlaneBase::colorSetup(BufferMapper& mapper)
 {
-#ifdef ASUS_ZENFONE2_LP_BLOBS
+#ifdef PRE_ION_X86
     return true;
 #else
     CTRACE();
