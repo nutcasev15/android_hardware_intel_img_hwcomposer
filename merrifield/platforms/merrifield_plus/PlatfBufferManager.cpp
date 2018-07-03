@@ -50,7 +50,7 @@ DataBuffer* PlatfBufferManager::createDataBuffer(buffer_handle_t handle)
 
 BufferMapper* PlatfBufferManager::createBufferMapper(DataBuffer& buffer)
 {
-    return new TngGrallocBufferMapper(*mGralloc, buffer);
+    return new TngGrallocBufferMapper(*mGrallocModule, buffer);
 }
 
 bool PlatfBufferManager::blit(buffer_handle_t srcHandle, buffer_handle_t destHandle,
@@ -59,7 +59,8 @@ bool PlatfBufferManager::blit(buffer_handle_t srcHandle, buffer_handle_t destHan
 {
     int fenceFd;
 
-    if (gralloc_blit_handle_to_handle_img(mGralloc,
+    if (mGrallocModule->perform(mGrallocModule,
+                                GRALLOC_MODULE_BLIT_HANDLE_TO_HANDLE_IMG,
                                 srcHandle,
                                 destHandle,
                                 destRect.w, destRect.h, destRect.x,

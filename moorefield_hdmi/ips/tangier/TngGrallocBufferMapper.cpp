@@ -22,10 +22,10 @@
 namespace android {
 namespace intel {
 
-TngGrallocBufferMapper::TngGrallocBufferMapper(const hw_device_t& gralloc,
-                                               DataBuffer& buffer)
+TngGrallocBufferMapper::TngGrallocBufferMapper(gralloc_module_t const& module,
+                                                    DataBuffer& buffer)
     : GrallocBufferMapperBase(buffer),
-      mGralloc(gralloc),
+      mGrallocModule(module),
       mBufferObject(0)
 {
     CTRACE();
@@ -122,7 +122,8 @@ bool TngGrallocBufferMapper::map()
 
     CTRACE();
     // get virtual address
-    err = gralloc_get_buffer_cpu_addresses_img(&mGralloc,
+    err = mGrallocModule.perform(&mGrallocModule,
+                                  GRALLOC_MODULE_GET_BUFFER_CPU_ADDRESSES_IMG,
                                   (buffer_handle_t)mClonedHandle,
                                   vaddr,
                                   size);
@@ -161,7 +162,8 @@ bool TngGrallocBufferMapper::map()
         }
     }
 
-    err = gralloc_put_buffer_cpu_addresses_img(&mGralloc,
+    err = mGrallocModule.perform(&mGrallocModule,
+                                  GRALLOC_MODULE_PUT_BUFFER_CPU_ADDRESSES_IMG,
                                   (buffer_handle_t)mClonedHandle);
     return false;
 }
@@ -182,7 +184,8 @@ bool TngGrallocBufferMapper::unmap()
         mSize[i] = 0;
     }
 
-    err = gralloc_put_buffer_cpu_addresses_img(&mGralloc,
+    err = mGrallocModule.perform(&mGrallocModule,
+                                  GRALLOC_MODULE_PUT_BUFFER_CPU_ADDRESSES_IMG,
                                   (buffer_handle_t)mClonedHandle);
     if (err) {
         ELOGTRACE("failed to unmap. err = %d", err);
@@ -236,7 +239,8 @@ uint32_t TngGrallocBufferMapper::getFbHandle(int subIndex)
     }
 
     // get virtual address
-    err = gralloc_get_buffer_cpu_addresses_img(&mGralloc,
+    err = mGrallocModule.perform(&mGrallocModule,
+                                  GRALLOC_MODULE_GET_BUFFER_CPU_ADDRESSES_IMG,
                                   (buffer_handle_t)mClonedHandle,
                                   vaddr,
                                   size);
@@ -250,7 +254,8 @@ uint32_t TngGrallocBufferMapper::getFbHandle(int subIndex)
 
 void TngGrallocBufferMapper::putFbHandle()
 {
-    int err = gralloc_put_buffer_cpu_addresses_img(&mGralloc,
+    int err = mGrallocModule.perform(&mGrallocModule,
+                                  GRALLOC_MODULE_PUT_BUFFER_CPU_ADDRESSES_IMG,
                                   (buffer_handle_t)mClonedHandle);
     if (err) {
         ELOGTRACE("failed to unmap. err = %d", err);

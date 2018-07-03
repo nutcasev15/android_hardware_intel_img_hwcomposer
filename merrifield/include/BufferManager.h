@@ -65,7 +65,7 @@ protected:
     virtual DataBuffer* createDataBuffer(buffer_handle_t handle) = 0;
     virtual BufferMapper* createBufferMapper(DataBuffer& buffer) = 0;
 
-    const hw_device_t* mGralloc;
+    gralloc_module_t const* mGrallocModule;
 private:
     enum {
         // make the buffer pool large enough
