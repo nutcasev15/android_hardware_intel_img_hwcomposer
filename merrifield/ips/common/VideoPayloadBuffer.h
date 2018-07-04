@@ -17,6 +17,7 @@
 #define VIDEO_PAYLOAD_BUFFER_H
 
 #include <utils/Timers.h>
+#include <cutils/native_handle.h>
 namespace android {
 namespace intel {
 
