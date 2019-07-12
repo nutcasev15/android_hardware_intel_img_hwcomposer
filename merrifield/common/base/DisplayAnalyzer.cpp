@@ -88,6 +88,10 @@ void DisplayAnalyzer::analyzeContents(
     mCachedNumDisplays = numDisplays;
     mCachedDisplays = displays;
 
+    // Maximum HW Layers HWC can Handle
+    // due to Timing Issues During Animation Compositing
+    const size_t max_layers = 3;
+
     handlePendingEvents();
 
     if (mVideoExtModeEnabled) {
@@ -99,6 +103,16 @@ void DisplayAnalyzer::analyzeContents(
         // blank event is only processed once
         blankSecondaryDevice();
     }
+
+    // Effectively, Force GPU During Animations on Display
+    // This is to Ensure The Buffers are not Corrupted
+    // due to Fencing Issues or Collisions
+    if (displays[0]) {
+        if (displays[0]->numHwLayers > max_layers) {
+            setCompositionType(0, HWC_FORCE_FRAMEBUFFER, true);
+        }
+    }
+
 }
 
 void DisplayAnalyzer::handleVideoExtMode()
