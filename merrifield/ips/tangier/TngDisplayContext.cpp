@@ -154,7 +154,8 @@ bool TngDisplayContext::commitEnd(size_t numDisplays, hwc_display_contents_1_t *
                                           &releaseFenceFd);
         if (err) {
             ETRACE("post failed, err = %d", err);
-            return false;
+            // We need to close the acquire fences
+            // return false;
         }
     }
 
